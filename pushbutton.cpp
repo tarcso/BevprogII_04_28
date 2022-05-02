@@ -1,5 +1,6 @@
 #include "pushbutton.hpp"
 #include <iostream>
+#include <string>
 
 using namespace genv;
 
@@ -20,4 +21,5 @@ void PushButton::draw() const
 {
     gout << color(255, 255, 255) << move_to(m_x, m_y) << box(m_size_x, m_size_y);
     gout << color(125,125,125) << move_to(m_x + 2, m_y + 2) << box(m_size_x, m_size_y);
+    gout << color(255, 255, 255) << move_to(m_x + 5, m_y + m_size_y/2 - (gout.cascent()+ gout.cdescent())/2) << color(0,0,0) << text(m_szov);
 }
