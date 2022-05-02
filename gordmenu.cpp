@@ -2,7 +2,6 @@
 #include "menuelem.hpp"
 #include <cmath>
 #include <vector>
-#include <iostream>
 
 using namespace genv;
 
@@ -68,12 +67,11 @@ void GordMenu::hozzaadElem(std::string s)
         m_gorg = true;
         m_gordmax = m_elemek.size()-m_hatardb;
     }
-
-    std::cout << "atrakva - " << m_elemek.size() << std::endl;
 }
 
 void GordMenu::torolElem(std::string s)
 {
+    if(m_elemek.size() == 0) return;
     std::vector<MenuElem*> marad;
     int ittvan = m_elemek.size();
     for (size_t i = 0; i < m_elemek.size(); i++)
@@ -95,13 +93,12 @@ void GordMenu::torolElem(std::string s)
 
     if(m_elemek.size()-m_hatardb > 0)
         m_gordmax = m_elemek.size()-m_hatardb;
-
-    std::cout << "torolve" << std::endl;
+    if(s == m_szov && ittvan != m_elemek.size()) m_szov = m_elemek[ittvan]->m_szov;
 }
 
 bool GordMenu::is_selected(int mx, int my) const 
 {
-    if(m_nyomott) return mx >= m_x && mx <= m_x + m_size_x && my >= m_y && my <= m_elemek[m_elemek.size()-1]->m_y + m_elemek[m_elemek.size()-1]->m_size_y;
+    if(m_nyomott && !m_elemek.empty()) return mx >= m_x && mx <= m_x + m_size_x && my >= m_y && my <= m_elemek[m_elemek.size()-1]->m_y + m_elemek[m_elemek.size()-1]->m_size_y;
     else return mx >= m_x && mx <= m_x + m_size_x && my >= m_y && my <= m_y + m_size_y;
 }
 
@@ -141,6 +138,7 @@ void GordMenu::handle(const event& ev)
                 m_nyomott = false;
                 m_szov = p->m_szov;
                 reset();
+
             }
         }
         else p->m_valasztott = false;
@@ -160,7 +158,7 @@ void GordMenu::draw() const
     {
         haromszog(m_x + m_size_x*9.0/10.0 + (m_size_x*1.0/10.0)/2.0, m_y + m_size_y/3.0, (m_size_x*1.0/10.0)*1.0/4.0, m_size_y/3.0, 1);
     }
-    else
+    else if(m_elemek.size() >= 0)
     {
         haromszog(m_x + m_size_x*9.0/10.0 + (m_size_x*1.0/10.0)/2.0, m_y + m_size_y*2.0/3.0, (m_size_x*1.0/10.0)*1.0/4.0 ,m_size_y/3.0, -1);
         for(const MenuElem* const m : m_elemek)

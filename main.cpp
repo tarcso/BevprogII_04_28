@@ -4,7 +4,6 @@
 #include "pushbutton.hpp"
 #include "Window.hpp"
 #include <vector>
-#include <iostream>
 #include <fstream>
 #include <functional>
 

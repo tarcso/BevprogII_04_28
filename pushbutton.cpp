@@ -1,5 +1,4 @@
 #include "pushbutton.hpp"
-#include <iostream>
 #include <string>
 
 using namespace genv;
@@ -10,7 +9,7 @@ PushButton::PushButton(Window* window, int x, int y, int sx, int sy, std::string
 
 void PushButton::handle(const event& ev)
 {
-    if(ev.type == ev_mouse && ev.button == btn_left)
+    if(is_selected(ev.pos_x, ev.pos_y) && ev.type == ev_mouse && ev.button == btn_left)
     {
         m_pushed = true;
         m_func();
